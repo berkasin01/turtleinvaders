@@ -1,13 +1,15 @@
 from turtle import Turtle
 import random
 
-
 class Aliens:
     def __init__(self):
         self.alien_shapes = ["circle", "triangle", "turtle"]
         self.all_aliens = []
         self.x_vel = 10
         self.y_vel = 10
+        self.projectile_vel = 20
+        self.all_projectiles = []
+        self.projectile_spawn_rate = 2
         self.movement_speed = 0.1
 
     def create_aliens(self, y_val):
@@ -24,7 +26,26 @@ class Aliens:
         for alien in self.all_aliens:
             x = alien.pos()[0]
             y = alien.pos()[1]
-            alien.goto(x+self.x_vel, y)
+            alien.setx(x + self.x_vel)
+
+    def spawn_projectiles(self, x_val, y_val):
+        projectile = Turtle()
+        projectile.penup()
+        projectile.color("green")
+        projectile.shape("square")
+        projectile.shapesize(0.1, 0.5)
+        projectile.setheading(270)
+        projectile.goto(x_val, y_val)
+        self.all_projectiles.append(projectile)
+
+    def projectile_move(self):
+        for projectile in self.all_projectiles:
+            x = projectile.pos()[0]
+            y = projectile.pos()[1]
+            projectile.sety(y - self.projectile_vel)
 
     def bounce_x(self):
         self.x_vel *= -1
+
+        if self.x_vel == 0:
+            self.x_vel = 10
