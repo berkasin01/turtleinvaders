@@ -24,7 +24,7 @@ for i in range(290, 380, 30):
 midshape.create_shape()
 
 previous_num_aliens = len(aliens.all_aliens)
-alien_projectile_probability = 10  # Initial probability threshold
+alien_projectile_probability = 10
 
 game_on = True
 while game_on:
@@ -45,7 +45,6 @@ while game_on:
         if alien.pos()[1] == 290:
             project_aliens.append(alien)
 
-    # Adjust frequency of alien projectiles based on current alien count
     if random.randint(0, alien_projectile_probability) == 4 and project_aliens:
         pick_alien = random.choice(project_aliens)
         pro_alien_x = pick_alien.pos()[0]
@@ -101,11 +100,13 @@ while game_on:
         if ko.distance(player_ship.main_ship) < 20:
             player_ship.lives -= 1
 
-    # Check if the number of aliens has decreased
     current_num_aliens = len(aliens.all_aliens)
     if current_num_aliens < previous_num_aliens:
-        aliens.x_vel += 10  # Increase speed of aliens
-        alien_projectile_probability = max(1, alien_projectile_probability - 1)  # Increase frequency of alien projectiles
+        if aliens.x_vel > 0:
+            aliens.x_vel += 2
+        else:
+            aliens.x_vel -= 2
+        alien_projectile_probability = max(1, alien_projectile_probability - 1)
         previous_num_aliens = current_num_aliens
 
     if player_ship.lives == 0:

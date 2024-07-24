@@ -1,5 +1,6 @@
-from turtle import Turtle
+from turtle import Turtle, Screen
 import random
+
 
 class Aliens:
     def __init__(self):
@@ -25,8 +26,7 @@ class Aliens:
     def move(self):
         for alien in self.all_aliens:
             x = alien.pos()[0]
-            y = alien.pos()[1]
-            alien.setx(x + self.x_vel)
+            alien.setx(x + self.x_vel)  # Move alien based on x_vel
 
     def spawn_projectiles(self, x_val, y_val):
         projectile = Turtle()
@@ -40,12 +40,8 @@ class Aliens:
 
     def projectile_move(self):
         for projectile in self.all_projectiles:
-            x = projectile.pos()[0]
             y = projectile.pos()[1]
             projectile.sety(y - self.projectile_vel)
 
     def bounce_x(self):
         self.x_vel *= -1
-
-        if self.x_vel == 0:
-            self.x_vel = 10
